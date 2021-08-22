@@ -8,9 +8,10 @@ main() {
     fi
     find_command=$(make_find_command $directory "$extensions")
     grep_pipelines=$(make_ignore_grep "$ignores")
-    command="${find_command}${grep_pipelines} |while read line; do echo \"\${line}\" ; done > test.txt"
-    echo $command
+    command="${find_command}${grep_pipelines} |while read line; do cat \"\${line}\" ; done |   wc -l"
+    confirm_command="${find_command}${grep_pipelines} |while read line; do echo \"\${line}\" ; done > check_files.txt"
     eval $command
+    eval $confirm_command
 }
 
 make_ignore_grep() {
